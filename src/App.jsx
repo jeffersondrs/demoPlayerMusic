@@ -13,28 +13,31 @@ import ProgressBar from "./components/progress-bar/ProgressBar.conponent";
 import DarkMode from "./components/darkmode/DarkMode.component";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState("#000");
+
   const handleMode = () => {
-    const white = "#fff";
-    const black = "#000";
-    const body = document.querySelector(".body");
+    const body = document.querySelector(".heart");
+    body.style.color = darkMode ? "#000" : "#ff0000";
+    setDarkMode(!darkMode);
+  };
 
-    if (darkMode ) {
-      body.style.color = white;
-      body.style.transform = "scale(1.5)";
-    } else {
-      body.style.color = black;
-      body.style.transform = "scale(1)";
+  const [mode, setMode] = useState("#fff");
 
-    }
+  const handleDarkMode = () => {
+    const body = document.querySelector("body");
+    const artist = document.querySelector(".artist");
+    const player = document.querySelector(".player");
 
-    setDarkMode(!darkMode )
+    body.style.backgroundColor = mode ? "#000" : "#fff";
+    artist.style.color = mode ? "#fff" : "#000";
+    player.style.color = mode ? "#fff" : "#000";
+    setMode(!mode);
   };
 
   return (
-    <>
-      <DarkMode />
-      <div className="w-96 App h-[600px] p-3 px-3 flex flex-col items-center justify-evenly rounded-3xl">
+    <body>
+      <DarkMode props={handleDarkMode} />
+      <div className="App w-96 h-[600px] p-3 px-3 flex flex-col items-center justify-evenly rounded-3xl">
         <div className="px-1">
           <img
             className="cover rounded-xl"
@@ -42,11 +45,14 @@ function App() {
           />
         </div>
         <div className="flex fle-row w-full justify-between items-center px-3">
-          <div>
-            <h1 className="font-semibold">Before I Forget</h1>
-            <p className="text-xs">Slipknot</p>
+          <div className="artist">
+            <strong className="text-2xl">Before I Forget</strong>
+            <p className="text-base">Slipknot</p>
           </div>
-          <div className="body" onClick={handleMode}>
+          <div
+            className="heart text-black scale-100 ease-in-out"
+            onClick={handleMode}
+          >
             <AiFillHeart />
           </div>
         </div>
@@ -56,22 +62,22 @@ function App() {
           </div>
           <div className="w-full flex flex-col items-end px-2">3:56</div>
         </div>
-        <div className="w-full px-2 h-12 flex flex-row justify-between items-center">
-          <FaRandom />
-          <div className="flex flex-row justify-evenly w-2/3 items-center text-2xl">
-            <CgPlayTrackPrevO />
-            <div className="text-5xl">
-              <CgPlayPauseO />
+        <div className="player flex flex-col w-full justify-evenly items-center h-28">
+          <div className="w-full px-5 h-12 flex flex-row justify-between items-center">
+            <FaRandom className="text-2xl hover:text-black/80" />
+            <div className="flex flex-row justify-evenly w-2/3 items-center text-3xl">
+              <CgPlayTrackPrevO className="hover:text-black/80" />
+              <div className="text-6xl hover:text-black/80">
+                <CgPlayPauseO />
+              </div>
+              <CgPlayTrackNextO className="hover:text-black/80" />
             </div>
-            <CgPlayTrackNextO />
+            <RxLoop className="text-2xl hover:text-black/80" />
           </div>
-          <RxLoop />
-        </div>
-        <div>
-          <FaShareAlt />
+          <FaShareAlt className="hover:text-black/80" />
         </div>
       </div>
-    </>
+    </body>
   );
 }
 
